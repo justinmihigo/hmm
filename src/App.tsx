@@ -12,7 +12,6 @@ import romeoJulietImage from './assets/romeo-juliet.jpg'
 import stagePortraitImage from './assets/stage-portrait.jpg'
 import ensembleImage from './assets/ubumuntu-ensemble.jpg'
 import ThreeScrollHero from './components/ThreeScrollHero'
-import InstagramReel from './components/embed'
 
 type PageMeta = {
   title: string
