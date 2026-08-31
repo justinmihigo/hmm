@@ -7,15 +7,12 @@ import {
 } from 'react'
 import emailjs from '@emailjs/browser'
 import giftOfTimeImage from './assets/gift-of-time.jpg'
-import homeOfDanceLogo from './assets/home-of-dance-logo.png'
-import homeOfDanceImage from './assets/home-of-dance.jpg'
 import portraitImage from './assets/honore-portrait.jpg'
 import romeoJulietImage from './assets/romeo-juliet.jpg'
 import stagePortraitImage from './assets/stage-portrait.jpg'
-import studioImage from './assets/studio-rehearsal.jpg'
 import ensembleImage from './assets/ubumuntu-ensemble.jpg'
-import untoldStoryImage from './assets/untold-story.jpg'
 import ThreeScrollHero from './components/ThreeScrollHero'
+import InstagramReel from './components/embed'
 
 type PageMeta = {
   title: string
@@ -29,9 +26,9 @@ const metaByPath: Record<string, PageMeta> = {
       'Honore Hartel is a Kigali-based dance artist, choreographer, teacher, actor, and creator of the KIMO movement language.',
   },
   '/portfolio/': {
-    title: 'Portfolio — Honore Hartel',
+    title: 'Performance — Honore Hartel',
     description:
-      'Performance, teaching, film, and screen work by Rwandan dance artist Honore Hartel.',
+      'Selected international and Rwandan performance work by Honore Hartel, including Romeo / Juliet — Paradise and Gift of Time.',
   },
   '/portfolio/performance/': {
     title: 'Performance — Honore Hartel',
@@ -41,7 +38,7 @@ const metaByPath: Record<string, PageMeta> = {
   '/portfolio/teaching/': {
     title: 'Teaching — Honore Hartel',
     description:
-      'Teaching practice, workshops, and Home of Dance work led by Honore Hartel in Kigali and beyond.',
+      'Honore Hartel’s teaching journey through classes, workshops, and movement practice in Rwanda and internationally.',
   },
   '/portfolio/film-screen/': {
     title: 'Film & Screen — Honore Hartel',
@@ -56,7 +53,7 @@ const metaByPath: Record<string, PageMeta> = {
   '/contact/': {
     title: 'Contact — Honore Hartel',
     description:
-      'Contact Honore Hartel for performance, choreography, teaching, acting, and creative collaborations.',
+      'Let’s work together. Send Honore Hartel a message about a project, class, performance, or collaboration.',
   },
   '/press/': {
     title: 'Press — Honore Hartel',
@@ -229,7 +226,7 @@ function SiteHeader({ currentPath }: { currentPath: string }) {
           >
             <span className="nav-portfolio-trigger">
               <a
-                href="/portfolio/"
+                href="/portfolio/performance/"
                 aria-current={isPortfolio ? 'page' : undefined}
                 onFocus={() => setPortfolioOpen(true)}
               >
@@ -258,6 +255,12 @@ function SiteHeader({ currentPath }: { currentPath: string }) {
             aria-current={currentPath === '/classes/' ? 'page' : undefined}
           >
             Classes
+          </a>
+          <a
+            href="/press/"
+            aria-current={currentPath === '/press/' ? 'page' : undefined}
+          >
+            Press
           </a>
           <a
             href="/contact/"
@@ -308,6 +311,9 @@ function SiteHeader({ currentPath }: { currentPath: string }) {
         <a href="/classes/" onClick={closeMenu}>
           Classes
         </a>
+        <a href="/press/" onClick={closeMenu}>
+          Press
+        </a>
         <a href="/contact/" onClick={closeMenu}>
           Contact
         </a>
@@ -323,38 +329,45 @@ function SiteHeader({ currentPath }: { currentPath: string }) {
 function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="footer-main">
-        <a className="footer-name" href="/">
-          Honore Hartel
-        </a>
-        <p>Dance Artist · Choreographer · Teacher · Actor</p>
-        <a className="footer-contact" href="/contact/">
-          Get in touch <ArrowUpRight />
+      <div className="footer-cta">
+        <h2>Interested in working with Honore?</h2>
+        <a className="footer-cta-button" href="/contact/">
+          Start here
         </a>
       </div>
-      <div className="footer-socials" aria-label="Social links">
-        <span>Follow</span>
+      <nav className="footer-links" aria-label="Social and project links">
         <a
-          href="https://linktr.ee/honorehartel"
+          href="https://www.youtube.com/@honore_hartel"
           target="_blank"
           rel="noreferrer"
         >
-          Honore’s socials <ArrowUpRight />
+          YouTube
+        </a>
+        <a
+          href="https://www.instagram.com/honore_hartel/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Instagram
+        </a>
+        <a
+          href="https://www.facebook.com/share/16T2CtvCwf/?mibextid=wwXIfr"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Facebook
         </a>
         <a
           href="https://www.instagram.com/home.ofdance?igsh=MTNvazk1OW4yNmJoMg=="
           target="_blank"
           rel="noreferrer"
         >
-          Home of Dance <ArrowUpRight />
+          Home of Dance
         </a>
-      </div>
-      <div className="footer-meta">
-        <span>© {new Date().getFullYear()} Honore Hartel</span>
-        <a href="/press/">Press</a>
-        <a href="/contact/">Contact</a>
-        <a href="#main-content">Back to top ↑</a>
-      </div>
+      </nav>
+      <p className="footer-copyright">
+        © {new Date().getFullYear()} Honore Hartel. All rights reserved.
+      </p>
     </footer>
   )
 }
@@ -382,7 +395,46 @@ function SectionLabel({ children }: { children: ReactNode }) {
   return <p className="section-label">{children}</p>
 }
 
-function Stat({ value, suffix, label }: { value: number; suffix?: string; label: string }) {
+function ClockIcon() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="11" />
+      <path d="M16 9.5v7l4.5 2.5" />
+    </svg>
+  )
+}
+
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="11" />
+      <path d="M5 16h22M16 5c3.3 3.1 5 6.8 5 11s-1.7 7.9-5 11c-3.3-3.1-5-6.8-5-11s1.7-7.9 5-11Z" />
+    </svg>
+  )
+}
+
+function StudentsIcon() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="11" r="4" />
+      <circle cx="7.5" cy="14" r="3" />
+      <circle cx="24.5" cy="14" r="3" />
+      <path d="M9.5 25v-2.2c0-3.7 2.9-6.8 6.5-6.8s6.5 3.1 6.5 6.8V25M3.5 24v-1.4c0-2.8 1.8-5.2 4.5-5.6M28.5 24v-1.4c0-2.8-1.8-5.2-4.5-5.6" />
+    </svg>
+  )
+}
+
+function Stat({
+  value,
+  suffix,
+  label,
+  icon,
+}: {
+  value: number
+  suffix?: string
+  label: string
+  icon: ReactNode
+}) {
   const [display, setDisplay] = useState(value)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -420,6 +472,7 @@ function Stat({ value, suffix, label }: { value: number; suffix?: string; label:
 
   return (
     <div className="stat" ref={ref}>
+      <span className="stat-icon">{icon}</span>
       <strong>
         {display}
         {suffix}
@@ -434,80 +487,27 @@ function HomePage() {
     <>
       <ThreeScrollHero />
 
-      <section className="kimo section" id="kimo" aria-labelledby="kimo-title">
-        <div className="section-inner">
-          <SectionLabel>Original movement language</SectionLabel>
-          <div className="kimo-heading">
-            <h2 id="kimo-title">
-              KIMO
-            </h2>
-            <p>
-              KIMO brings the grounding of Rwanda's Gakondo into conversation
-              with contemporary movement.
-            </p>
-          </div>
-          <div className="kimo-media">
-            <figure className="kimo-image">
-              <img
-                src={studioImage}
-                alt="Honore Hartel in movement during a rehearsal"
-                width="1800"
-                height="1200"
-                loading="lazy"
-              />
-            </figure>
-            <div className="kimo-video">
-              <iframe
-                src="https://www.dailymotion.com/embed/video/xa6ww70"
-                title="How tradition moves forward in Rwanda — Honore Hartel"
-                allow="autoplay; fullscreen; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-              />
-            </div>
-          </div>
-          <div className="kimo-foot">
-            <p>
-              An original style created by Honore Hartel, shaped through
-              Rwandan traditional dance, Afro movement, and contemporary form.
-            </p>
-            <a
-              className="button button--line"
-              href="https://www.dw.com/en/how-tradition-moves-forward-in-rwanda/video-76792121"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Learn more <ArrowUpRight />
-            </a>
-          </div>
-        </div>
-      </section>
-
       <section className="about section" id="about" aria-labelledby="about-title">
         <div className="section-inner">
-          <SectionLabel>About</SectionLabel>
           <div className="about-grid">
             <div className="about-copy">
-              <h2 id="about-title">
-              Honore Hartel
-              </h2>
-              <p className="about-lead">
-                A Rwandan dance artist working across performance,
-                choreography, education, and film.
+              <h2 id="about-title">Meet Honore</h2>
+              <p>
+                Honore MANZI MURENGEZI, known as Honore Hartel, is a dance
+                artist, choreographer, teacher, and actor based in Kigali. His
+                work moves across performance, choreography, film, and
+                teaching, from intimate theatre productions to large
+                commemorative works, and from Kigali to stages in Germany, the
+                UAE, and Sri Lanka.
               </p>
               <p>
-                Honore Manzi Murengezi, known professionally as Honore Hartel,
-                builds work through movement, culture, and human experience.
-                His practice moves from intimate theatre productions to large
-                commemorative works, and from Kigali to Germany, Sri Lanka,
-                and the UAE.
+                He is the founder of Home of Dance and the creator of KIMO, a
+                movement language rooted in Rwandan tradition and open to the
+                contemporary world. Across everything he does, his focus stays
+                the same: using movement to carry culture, tell stories, and
+                connect people.
               </p>
-              <p>
-                He is the founder of Home of Dance and the creator of KIMO, an
-                original movement language rooted in Rwanda and open to
-                contemporary forms.
-              </p>
-              <a className="text-link" href="/portfolio/">
+              <a className="text-link" href="/portfolio/performance/">
                 View portfolio <ArrowRight />
               </a>
             </div>
@@ -523,10 +523,49 @@ function HomePage() {
             </figure>
           </div>
           <div className="stats-grid" aria-label="Career highlights">
-            <Stat value={4} suffix="+" label="Years in professional practice" />
-            <Stat value={4} label="Countries performed in" />
-            <Stat value={150} suffix="+" label="Students through Home of Dance" />
+            <Stat value={4} suffix="+" label="Years of experience" icon={<ClockIcon />} />
+            <Stat value={4} label="Countries" icon={<GlobeIcon />} />
+            <Stat value={200} suffix="+" label="Students taught" icon={<StudentsIcon />} />
           </div>
+        </div>
+      </section>
+
+      <section className="kimo section" id="kimo" aria-labelledby="kimo-title">
+        <div className="section-inner">
+          <div className="kimo-heading">
+            <h2 id="kimo-title">KIMO Dance Style</h2>
+            <p>Where Rwandan tradition meets modern dance styles</p>
+          </div>
+          <div className="kimo-copy">
+            <div className="video-embed kimo-video">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/2_JvU2gDASI"
+                title="KIMO Dance Style by Honore Hartel"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p className="pb-10 !leading-8">
+                KIMO is a dynamic dance style born from the fusion of Rwandan
+                traditional dance and modern influences — a vibrant form that
+                celebrates Rwanda's rich cultural heritage while embracing
+                contemporary creativity.
+              </p>
+              <p className="pt-5 !leading-8">
+                Inspired by the depth of Kinyarwanda, KIMO seamlessly blends
+                traditional movement with modern elements, offering a captivating
+                experience that showcases the beauty and diversity of Rwandan
+                dance on a global stage. Through KIMO, I aim to bridge tradition
+                and modernity, sharing the cultural significance of Rwandan dance
+                with audiences worldwide.
+              </p>
+            </div>
+
+          </div>
+
         </div>
       </section>
     </>
@@ -550,71 +589,6 @@ function PageIntro({
         {children && <div className="page-intro-copy">{children}</div>}
       </div>
     </header>
-  )
-}
-
-function PortfolioPage() {
-  const categories = [
-    {
-      ...portfolioLinks[0],
-      image: romeoJulietImage,
-      alt: 'Honore Hartel performing Romeo in Romeo / Juliet — Paradise',
-      copy: 'Stage work, international collaborations, and original choreography.',
-    },
-    {
-      ...portfolioLinks[1],
-      image: homeOfDanceImage,
-      alt: 'Home of Dance students and teachers together in Kigali',
-      copy: 'Classes, workshops, and movement practice for different ages and levels.',
-    },
-    {
-      ...portfolioLinks[2],
-      image: untoldStoryImage,
-      alt: 'Black-and-white stills from the short film Untold Story',
-      copy: 'Acting, dance, and movement created for the camera.',
-    },
-  ]
-
-  return (
-    <>
-      <PageIntro eyebrow="Work" title="Portfolio">
-        <p>Performance, teaching, film, and screen.</p>
-      </PageIntro>
-      <section className="portfolio-categories section" aria-label="Portfolio categories">
-        <div className="section-inner category-grid">
-          {categories.map((category, index) => (
-            <a className="category-card" href={category.href} key={category.href}>
-              <figure>
-                <img
-                  src={category.image}
-                  alt={category.alt}
-                  width={index === 2 ? 839 : index === 1 ? 1600 : 1800}
-                  height={index === 2 ? 1500 : 1200}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                />
-              </figure>
-              <div>
-                <span>0{index + 1}</span>
-                <h2>{category.label}</h2>
-                <p>{category.copy}</p>
-                <ArrowUpRight />
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-      <section className="portfolio-press section">
-        <div className="section-inner simple-cta">
-          <div>
-            <SectionLabel>Press</SectionLabel>
-            <h2>Interviews and features</h2>
-          </div>
-          <a className="button button--dark" href="/press/">
-            View press <ArrowRight />
-          </a>
-        </div>
-      </section>
-    </>
   )
 }
 
@@ -704,58 +678,53 @@ function TeachingPage() {
   return (
     <>
       <PageIntro eyebrow="Portfolio" title="Teaching">
-        <p>Movement practice shared through classes, workshops, and community.</p>
+        <p>A teaching practice shaped by movement, exchange, and care.</p>
       </PageIntro>
-      <section className="feature-layout section">
-        <div className="section-inner feature-grid">
-          <figure className="feature-image">
-            <img
-              src={homeOfDanceImage}
-              alt="Honore Hartel with Home of Dance students and guest teachers"
-              width="1600"
-              height="1200"
-            />
-            <img className="feature-logo" src={homeOfDanceLogo} alt="Home of Dance" width="960" height="960" />
-          </figure>
-          <div className="feature-copy">
-            <SectionLabel>Founded in Kigali · 2024</SectionLabel>
-            <h2>Home of Dance</h2>
-            <p className="large-copy">
-              A growing space for movement, exchange, and creative possibility.
+      <section className="teaching-journey section" aria-labelledby="teaching-journey-title">
+        <div className="section-inner teaching-journey-grid">
+          <div className="teaching-copy">
+            <SectionLabel>Teaching journey</SectionLabel>
+            <h2 id="teaching-journey-title">Movement is something we share.</h2>
+            <p>
+              Honore’s teaching has grown alongside his work as a performer,
+              from regular classes in Kigali to workshops for children,
+              emerging dancers, and professional artists. His sessions draw on
+              Rwandan traditional movement, Afro Fusion, hip hop, dancehall,
+              and contemporary practice.
             </p>
             <p>
-              Honore leads Afro Fusion, Afro Hip Hop for children, and pop-up
-              workshops with guest teachers. The platform has welcomed more
-              than 150 students and six guest artists.
+              The aim is not to make every body move in the same way. It is to
+              build confidence, musicality, discipline, and the freedom to find
+              a movement language of your own.
             </p>
-            <div className="inline-stats">
-              <span><strong>150+</strong> students</span>
-              <span><strong>6</strong> guest artists</span>
+          </div>
+          <div className="teaching-reel">
+            <div className="instagram-video">
+              {/* <InstagramReel/> */}
+              <iframe
+                src="https://www.instagram.com/reel/DWgZhyqDAXw/embed/"
+                title="Honore Hartel teaching an international dance class"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
             </div>
-            <div className="button-row">
-              <a className="button button--dark" href="/classes/">
-                View classes <ArrowRight />
-              </a>
-              <a
-                className="button button--line"
-                href="https://www.instagram.com/home.ofdance?igsh=MTNvazk1OW4yNmJoMg=="
-                target="_blank"
-                rel="noreferrer"
-              >
-                Home of Dance <ArrowUpRight />
-              </a>
-            </div>
+            <a
+              className="media-external-link"
+              href="https://www.instagram.com/reel/DWgZhyqDAXw/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Teaching reel · Watch on Instagram <ArrowUpRight />
+            </a>
           </div>
         </div>
       </section>
-      <section className="teaching-list section">
-        <div className="section-inner">
-          <SectionLabel>Teaching formats</SectionLabel>
-          <div className="line-list">
-            <div><span>01</span><h2>Open classes</h2><p>Afro Fusion and movement practice in Kigali.</p></div>
-            <div><span>02</span><h2>Children</h2><p>Afro Hip Hop and creative movement.</p></div>
-            <div><span>03</span><h2>Workshops</h2><p>Guest sessions, intensives, and tailored group work.</p></div>
-          </div>
+      <section className="teaching-numbers" aria-label="Teaching highlights">
+        <div className="section-inner teaching-number-grid">
+          <div><strong>6+</strong><span>Workshops given</span></div>
+          <div><strong>25+</strong><span>Classes</span></div>
+          <div><strong>200+</strong><span>Students taught</span></div>
         </div>
       </section>
       <NextPage href="/portfolio/film-screen/" label="Next" title="Film & Screen" />
@@ -764,49 +733,62 @@ function TeachingPage() {
 }
 
 function FilmScreenPage() {
+  const films = [
+    {
+      title: 'Untold Story',
+      year: '2025',
+      role: 'Actor · Dancer · Creative',
+      description:
+        'An intimate short film about the silent battles dancers carry beyond the glow of the stage, created with Kiseki Films.',
+      videoId: 'Wo2TUVKasP0',
+    },
+    {
+      title: 'Where Am I Going?',
+      year: '2026',
+      role: 'Short film',
+      description:
+        'A movement-led short film from Honore Hartel, created for the screen.',
+      videoId: 'xEiYcVraQ6o',
+    },
+  ]
+
   return (
     <>
       <PageIntro eyebrow="Portfolio" title="Film & Screen">
         <p>Acting, dance, and movement for camera.</p>
       </PageIntro>
       <section className="film-feature section">
-        <div className="section-inner film-grid">
-          <figure>
-            <img
-              src={untoldStoryImage}
-              alt="Black-and-white film stills from Untold Story"
-              width="839"
-              height="1500"
-            />
-          </figure>
-          <div className="film-copy">
-            <div className="work-meta"><span>2025</span><span>Short film</span></div>
-            <h2>Untold Story</h2>
-            <p className="work-role">Actor · Dancer · Creative</p>
-            <p>
-              An intimate film about the silent battles dancers carry beyond
-              the glow of the stage, created with Kiseki Films.
-            </p>
-            <a
-              className="button button--dark"
-              href="https://youtu.be/Wo2TUVKasP0?si=3TohQwudfHWnu9HP"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Watch film <ArrowUpRight />
-            </a>
-          </div>
+        <div className="section-inner film-card-grid">
+          {films.map((film) => (
+            <article className="film-card" key={film.videoId}>
+              <div className="video-embed film-video">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${film.videoId}`}
+                  title={`${film.title} — short film by Honore Hartel`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+              <div className="film-copy">
+                <div className="work-meta"><span>{film.year}</span><span>Short film</span></div>
+                <h2>{film.title}</h2>
+                <p className="work-role">{film.role}</p>
+                <p>{film.description}</p>
+                <a
+                  className="text-link"
+                  href={`https://www.youtube.com/watch?v=${film.videoId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Watch on YouTube <ArrowUpRight />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
-      {/* <section className="screen-still">
-        <img
-          src={studioImage}
-          alt="Honore Hartel during a filmed movement rehearsal"
-          width="1800"
-          height="1200"
-          loading="lazy"
-        />
-      </section> */}
       <NextPage href="/contact/" label="For screen and acting enquiries" title="Get in touch" />
     </>
   )
@@ -951,45 +933,91 @@ function ContactForm({
 function ClassesPage() {
   return (
     <>
-      <PageIntro eyebrow="Classes" title="Home of Dance">
-        <p>Classes and workshops led by Honore Hartel in Kigali.</p>
-      </PageIntro>
-      <section className="classes-overview section">
-        <div className="section-inner classes-grid">
-          <div className="classes-image">
-            <img
-              src={homeOfDanceImage}
-              alt="The Home of Dance community in Kigali"
-              width="1600"
-              height="1200"
-            />
-            <img src={homeOfDanceLogo} alt="Home of Dance" width="960" height="960" />
-          </div>
+      <PageIntro eyebrow="Classes" title="Home of Dance" />
+      <section className="classes-overview section" aria-labelledby="home-of-dance-story">
+        <div className="section-inner classes-story-grid">
           <div className="classes-copy">
-            <SectionLabel>Weekly in Kigali</SectionLabel>
-            <h2>Current class formats</h2>
-            <div className="class-list">
-              <article><span>01</span><div><h3>Afro Fusion</h3><p>Open movement practice shaped by African forms and contemporary influences.</p></div></article>
-              <article><span>02</span><div><h3>Afro Hip Hop for children</h3><p>Rhythm, coordination, confidence, and creative movement.</p></div></article>
-              <article><span>03</span><div><h3>Guest workshops</h3><p>Pop-up sessions with local and visiting dance artists.</p></div></article>
-            </div>
-            <p className="availability-note">
-              Dates, venue, level, and price are confirmed with each booking.
+            <h2 id="home-of-dance-story">A growing dance community in Kigali.</h2>
+            <p>
+              Home of Dance is a dance teaching and collaborative platform
+              based in Kigali, not just a place to learn, but a growing
+              community where dancers, teachers, and creatives come together.
+              It runs weekly classes in Afro Fusion and Afro Hip Hop for
+              children, alongside pop-up workshops with local and visiting
+              artists. Whether you're stepping into a class for the first time
+              or deepening a lifelong practice, there's a space for you here.
             </p>
+            <p>
+              Since 2024, Home of Dance has welcomed 200+ students and hosted
+              guest teachers across many styles, and it keeps growing, building
+              toward a permanent studio: a lasting home for dance in Rwanda.
+            </p>
+          </div>
+          <div className="classes-video-block">
+            <div className="home-of-dance-video">
+              <iframe
+                src="https://www.instagram.com/reel/DbbVwe3OjEb/embed/"
+                title="Home of Dance Season 2 class highlights"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <a
+              className="media-external-link"
+              href="https://www.instagram.com/reel/DbbVwe3OjEb/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Season 2 highlights · Watch on Instagram <ArrowUpRight />
+            </a>
           </div>
         </div>
       </section>
-      <section className="class-booking section" aria-labelledby="class-booking-title">
+      <section className="booking-paths section" aria-labelledby="booking-paths-title">
+        <div className="section-inner">
+          <SectionLabel>Booking</SectionLabel>
+          <h2 id="booking-paths-title">Choose how you want to dance.</h2>
+          <div className="booking-path-grid">
+            <article>
+              <span>01</span>
+              <h3>Weekly classes</h3>
+              <p>Join the regular Afro Fusion and kids' Afro Hip Hop classes.</p>
+              <a
+                className="button button--dark"
+                href="https://homeofdance.sinc.events/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Book via Sinc <ArrowUpRight />
+              </a>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Private classes &amp; events</h3>
+              <p>Request a private session, a group class, or dance for your event.</p>
+              <a className="button button--line" href="#class-booking-form">
+                Request here <ArrowRight />
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section
+        className="class-booking section"
+        id="class-booking-form"
+        aria-labelledby="class-booking-title"
+      >
         <div className="section-inner booking-grid">
           <div>
-            <SectionLabel>Booking</SectionLabel>
-            <h2 id="class-booking-title">Book a class</h2>
+            <SectionLabel>Private &amp; events</SectionLabel>
+            <h2 id="class-booking-title">Tell us what you have in mind.</h2>
             <p>
-              Share who the class is for, your level, and the date that works
-              for you. Home of Dance will reply with the current options.
+              Share the group, occasion, location, and date. Home of Dance will
+              reply with the right format for you.
             </p>
           </div>
-          <ContactForm defaultService="Class booking" compact />
+          <ContactForm defaultService="Private class or event" compact />
         </div>
       </section>
     </>
@@ -999,9 +1027,7 @@ function ClassesPage() {
 function ContactPage() {
   return (
     <>
-      <PageIntro eyebrow="Contact" title="Get in touch">
-        <p>Performance, choreography, teaching, acting, and collaboration.</p>
-      </PageIntro>
+      <PageIntro eyebrow="Contact" title="Let’s work together" />
       <section className="contact-section section">
         <div className="section-inner contact-grid">
           <aside className="contact-details">
@@ -1099,7 +1125,7 @@ function App() {
       page = <HomePage />
       break
     case '/portfolio/':
-      page = <PortfolioPage />
+      page = <PerformancePage />
       break
     case '/portfolio/performance/':
       page = <PerformancePage />
