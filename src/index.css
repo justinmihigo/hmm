@@ -238,9 +238,10 @@ figure {
 
 .brand {
   width: max-content;
-  font-size: clamp(1.02rem, 1.5vw, 1.25rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
+  font-family: "Bodoni Moda", Georgia, serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .desktop-nav {
@@ -773,6 +774,22 @@ figure {
   line-height: 1.75;
 }
 
+.about-copy .letter-greeting,
+.about-copy .letter-signature {
+  color: var(--blue);
+  font-family: Caveat, cursive;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.about-copy .letter-greeting {
+  margin-bottom: 22px;
+}
+
+.about-copy .letter-signature {
+  margin-top: 30px;
+}
+
 .about-copy .text-link {
   margin-top: 25px;
 }
@@ -866,7 +883,7 @@ figure {
   max-width: 1160px;
   margin: clamp(42px, 6vw, 78px) 0 0;
   color: var(--blue);
-  font-size: clamp(5rem, 12vw, 11.5rem);
+  font-size: clamp(4rem, 9vw, 8.5rem);
   font-weight: 560;
   line-height: 0.76;
   letter-spacing: -0.07em;
@@ -1019,6 +1036,35 @@ figure {
   background: var(--ink);
 }
 
+.portfolio-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 55px;
+  padding-bottom: 55px;
+  color: white;
+  background: var(--ink);
+}
+
+.portfolio-download h2 {
+  margin: 18px 0 0;
+  font-size: clamp(1.8rem, 3.2vw, 3.5rem);
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.portfolio-download .section-label {
+  color: var(--coral);
+}
+
+.portfolio-download .button--line {
+  flex: 0 0 auto;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
 .featured-work-grid,
 .more-work-grid {
   display: grid;
@@ -1039,7 +1085,7 @@ figure {
 }
 
 .work-card--featured .work-media {
-  aspect-ratio: 1.35;
+  aspect-ratio: 0.88;
 }
 
 .more-work-grid .work-media {
@@ -1709,9 +1755,44 @@ figure {
   justify-self: end;
 }
 
+.nextgena {
+  color: white;
+  background: var(--blue);
+}
+
+.nextgena-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(50px, 10vw, 150px);
+}
+
+.nextgena h2 {
+  max-width: 650px;
+  margin: 30px 0 0;
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.nextgena p {
+  max-width: 650px;
+  margin: 0 0 28px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.78;
+}
+
+.nextgena .text-link {
+  color: white;
+}
+
 .home-of-dance-video {
   width: 100%;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #0c0c0b;
 }
@@ -1953,6 +2034,54 @@ figure {
 }
 
 .press-list {
+  border-top: 1px solid var(--line);
+}
+
+.press-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: clamp(28px, 5vw, 80px);
+  padding: 0 0 80px;
+}
+
+.press-video {
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+}
+
+.press-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.press-feature-copy {
+  align-self: end;
+}
+
+.press-feature-copy > span,
+.press-feature-copy > p {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.press-feature-copy h2 {
+  margin: 16px 0;
+  color: var(--blue);
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  font-weight: 550;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+
+.press-feature-copy .text-link {
+  margin-top: 24px;
+}
+
+.press-clipping {
   border-top: 1px solid var(--line);
 }
 
@@ -2287,6 +2416,7 @@ figure {
   .film-card-grid,
   .classes-grid,
   .classes-story-grid,
+  .nextgena-grid,
   .teaching-journey-grid,
   .teaching-number-grid,
   .booking-path-grid,
@@ -2325,7 +2455,8 @@ figure {
   }
 
   .teaching-journey-grid,
-  .classes-story-grid {
+  .classes-story-grid,
+  .nextgena-grid {
     gap: 60px;
   }
 
@@ -2446,6 +2577,21 @@ figure {
   .class-booking .booking-grid,
   .contact-grid {
     gap: 60px;
+  }
+
+  .press-feature {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 55px;
+  }
+
+  .press-feature-copy {
+    align-self: start;
+  }
+
+  .portfolio-download {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .contact-details {
@@ -2604,7 +2750,7 @@ figure {
   }
 
   .page-intro h1 {
-    font-size: 18vw;
+    font-size: clamp(3.25rem, 15vw, 6.5rem);
     line-height: 0.82;
   }
 
@@ -2624,7 +2770,7 @@ figure {
 
   .work-card--featured .work-media,
   .more-work-grid .work-media {
-    aspect-ratio: 1.1;
+    aspect-ratio: 0.92;
   }
 
   .more-work summary {
@@ -2637,6 +2783,11 @@ figure {
 
   .next-page strong {
     font-size: 13vw;
+  }
+
+  .portfolio-download {
+    padding-top: 42px;
+    padding-bottom: 42px;
   }
 
   .feature-image .feature-logo,

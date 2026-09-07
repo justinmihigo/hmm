@@ -79,8 +79,8 @@ function getPageMeta(path: string): PageMeta {
 
 const portfolioLinks = [
   { label: 'Performance', href: '/portfolio/performance/' },
-  { label: 'Teaching', href: '/portfolio/teaching/' },
   { label: 'Film & Screen', href: '/portfolio/film-screen/' },
+  { label: 'Teaching', href: '/portfolio/teaching/' },
 ]
 
 const performanceWorks = [
@@ -491,21 +491,21 @@ function HomePage() {
           <div className="about-grid">
             <div className="about-copy">
               <h2 id="about-title">Meet Honore</h2>
+              <p className="letter-greeting">Dear friend,</p>
               <p>
-                Honore MANZI MURENGEZI, known as Honore Hartel, is a dance
+                Honore Manzi Murengezi, known as Honore Hartel, is a dance
                 artist, choreographer, teacher, and actor based in Kigali. His
-                work moves across performance, choreography, film, and
-                teaching, from intimate theatre productions to large
-                commemorative works, and from Kigali to stages in Germany, the
-                UAE, and Sri Lanka.
+                work moves across performance, choreography, film, and teaching,
+                from intimate theatre productions to large commemorative works,
+                and from Kigali to stages in Germany, the UAE, and Sri Lanka.
               </p>
               <p>
-                He is the founder of Home of Dance and the creator of KIMO, a
-                movement language rooted in Rwandan tradition and open to the
-                contemporary world. Across everything he does, his focus stays
-                the same: using movement to carry culture, tell stories, and
-                connect people.
+                He is the founder of Home of Dance and the creator of KIMO, a movement
+                language rooted in Rwandan tradition and open to the contemporary world.
+                Across everything he does, his focus stays the same: using movement to
+                carry culture, tell stories, and connect people.
               </p>
+              <p className="letter-signature">With warmth,<br />Honore</p>
               <a className="text-link" href="/portfolio/performance/">
                 View portfolio <ArrowRight />
               </a>
@@ -524,7 +524,8 @@ function HomePage() {
           <div className="stats-grid" aria-label="Career highlights">
             <Stat value={4} suffix="+" label="Years of experience" icon={<ClockIcon />} />
             <Stat value={4} label="Countries" icon={<GlobeIcon />} />
-            <Stat value={200} suffix="+" label="Students taught" icon={<StudentsIcon />} />
+            <Stat value={1000} suffix="+" label="Students taught" icon={<StudentsIcon />} />
+            <Stat value={100} suffix="+" label="Classes & Workshops" icon={<ClockIcon />} />
           </div>
         </div>
       </section>
@@ -668,7 +669,16 @@ function PerformancePage() {
           </div>
         </details>
       </section>
-      <NextPage href="/portfolio/teaching/" label="Next" title="Teaching" />
+      <div className="portfolio-download section-inner">
+        <div>
+          <SectionLabel>Portfolio PDF</SectionLabel>
+          <h2>Take the work with you.</h2>
+        </div>
+        <a className="button button--line" href="/portfolio.pdf" download>
+          Download portfolio <ArrowUpRight />
+        </a>
+      </div>
+      <NextPage href="/portfolio/film-screen/" label="Next" title="Film & Screen" />
     </>
   )
 }
@@ -955,20 +965,21 @@ function ClassesPage() {
           <div className="classes-video-block">
             <div className="home-of-dance-video">
               <iframe
-                src="https://www.instagram.com/reel/DbbVwe3OjEb/embed/"
-                title="Home of Dance Season 2 class highlights"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                src="https://www.youtube-nocookie.com/embed/gOngYdInVNI"
+                title="Home of Dance"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
                 loading="lazy"
               />
             </div>
             <a
               className="media-external-link"
-              href="https://www.instagram.com/reel/DbbVwe3OjEb/"
+              href="https://www.youtube.com/watch?v=gOngYdInVNI"
               target="_blank"
               rel="noreferrer"
             >
-              Season 2 highlights · Watch on Instagram <ArrowUpRight />
+              Home of Dance · Watch on YouTube <ArrowUpRight />
             </a>
           </div>
         </div>
@@ -976,7 +987,7 @@ function ClassesPage() {
       <section className="booking-paths section" aria-labelledby="booking-paths-title">
         <div className="section-inner">
           <SectionLabel>Booking</SectionLabel>
-          <h2 id="booking-paths-title">Choose how you want to dance.</h2>
+          <h2 id="booking-paths-title">Book your spot</h2>
           <div className="booking-path-grid">
             <article>
               <span>01</span>
@@ -999,6 +1010,28 @@ function ClassesPage() {
                 Request here <ArrowRight />
               </a>
             </article>
+          </div>
+        </div>
+      </section>
+      <section className="nextgena section" aria-labelledby="nextgena-title">
+        <div className="section-inner nextgena-grid">
+          <div>
+            <SectionLabel>TheNextGENA</SectionLabel>
+            <h2 id="nextgena-title">Growing Rwanda’s next generation of dancers.</h2>
+          </div>
+          <div>
+            <p>
+              TheNextGENA is a national dance development initiative created by Home of
+              Dance × African Mirror, dedicated to nurturing the next generation of dancers
+              and strengthening Rwanda’s dance ecosystem. Through dance education, creative
+              exchange, collaboration, performance, and professional opportunities, it
+              connects dancers, teachers, choreographers, crews, communities, and creative
+              institutions across Rwanda, creating spaces where people can learn, connect,
+              create, perform, and grow.
+            </p>
+            <a className="text-link" href="https://www.youtube.com/watch?v=gOngYdInVNI" target="_blank" rel="noreferrer">
+              Watch TheNextGENA <ArrowUpRight />
+            </a>
           </div>
         </div>
       </section>
@@ -1071,14 +1104,28 @@ function PressPage() {
       </PageIntro>
       <section className="press section">
         <div className="section-inner press-list">
-          {press.map((item) => (
-            <a href={item.href} target="_blank" rel="noreferrer" className="press-item" key={item.href}>
-              <span>{item.source}</span>
-              <h2>{item.title}</h2>
-              <p>{item.type}</p>
-              <ArrowUpRight />
-            </a>
-          ))}
+          <article className="press-feature">
+            <div className="video-embed press-video">
+              <iframe
+                src="https://www.dw.com/en/how-tradition-moves-forward-in-rwanda/video-76792121"
+                title="Deutsche Welle feature on Honore Hartel"
+                allow="autoplay; fullscreen"
+                loading="lazy"
+              />
+            </div>
+            <div className="press-feature-copy">
+              <span>{press[0].source}</span>
+              <h2>{press[0].title}</h2>
+              <p>{press[0].type}</p>
+              <a className="text-link" href={press[0].href} target="_blank" rel="noreferrer">Open feature <ArrowUpRight /></a>
+            </div>
+          </article>
+          <a href={press[1].href} target="_blank" rel="noreferrer" className="press-item press-clipping">
+            <span>{press[1].source}</span>
+            <h2>{press[1].title}</h2>
+            <p>{press[1].type}</p>
+            <ArrowUpRight />
+          </a>
         </div>
       </section>
     </>
