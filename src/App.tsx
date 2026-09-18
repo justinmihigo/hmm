@@ -638,24 +638,15 @@ function PerformancePage() {
   return (
     <>
       <PageIntro eyebrow="Portfolio" title="Performance">
-        <p>Selected stage and choreographic work.</p>
+        {/* <p>Selected stage and choreographic work.</p> */}
       </PageIntro>
       <section className="performance section" aria-label="Featured performances">
         <div className="section-inner featured-work-grid">
-          {performanceWorks.slice(0, 2).map((work) => (
-            <WorkCard work={work} featured key={work.title} />
+          {performanceWorks.map((work, index) => (
+            <WorkCard work={work} featured={index < 2} key={work.title} />
           ))}
         </div>
-        <details className="more-work section-inner">
-          <summary>
-            <span>See more</span>
-            <span className="summary-icon" aria-hidden="true">+</span>
-          </summary>
-          <div className="more-work-grid">
-            {performanceWorks.slice(2).map((work) => (
-              <WorkCard work={work} key={work.title} />
-            ))}
-          </div>
+        <div className="additional-work section-inner">
           <div className="credits-table" aria-label="Additional performance credits">
             <h2>Additional credits</h2>
             {performanceCredits.map(([title, role, place, year]) => (
@@ -667,18 +658,18 @@ function PerformancePage() {
               </div>
             ))}
           </div>
-        </details>
+        </div>
       </section>
       <div className="portfolio-download section-inner">
         <div>
           <SectionLabel>Portfolio PDF</SectionLabel>
           <h2>Take the work with you.</h2>
         </div>
-        <a className="button button--line" href="/portfolio.pdf" download>
+        <a className="button button--line" href="https://storage.googleapis.com/honoremanzimurengezi/HMM_Portfolio%20(1).pdf" target="_blank" rel="noreferrer">
           Download portfolio <ArrowUpRight />
         </a>
       </div>
-      <NextPage href="/portfolio/film-screen/" label="Next" title="Film & Screen" />
+      <PortfolioChooser currentHref="/portfolio/performance/" />
     </>
   )
 }
@@ -736,7 +727,7 @@ function TeachingPage() {
           <div><strong>200+</strong><span>Students taught</span></div>
         </div>
       </section>
-      <NextPage href="/portfolio/film-screen/" label="Next" title="Film & Screen" />
+      <PortfolioChooser currentHref="/portfolio/teaching/" />
     </>
   )
 }
@@ -798,7 +789,7 @@ function FilmScreenPage() {
           ))}
         </div>
       </section>
-      <NextPage href="/contact/" label="For screen and acting enquiries" title="Get in touch" />
+      <PortfolioChooser currentHref="/portfolio/film-screen/" />
     </>
   )
 }
@@ -1132,13 +1123,24 @@ function PressPage() {
   )
 }
 
-function NextPage({ href, label, title }: { href: string; label: string; title: string }) {
+function PortfolioChooser({ currentHref }: { currentHref: string }) {
+  const otherPortfolioLinks = portfolioLinks.filter((item) => item.href !== currentHref)
+
   return (
-    <a className="next-page" href={href}>
-      <span>{label}</span>
-      <strong>{title}</strong>
-      <ArrowRight />
-    </a>
+    <nav className="portfolio-chooser" aria-label="Explore portfolio">
+      <div className="section-inner">
+        <SectionLabel>Explore the portfolio</SectionLabel>
+        <div className="portfolio-chooser-list">
+          {otherPortfolioLinks.map((item, index) => (
+            <a href={item.href} key={item.href}>
+              <span>0{index + 1}</span>
+              <strong>{item.label}</strong>
+              <ArrowRight />
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
   )
 }
 
